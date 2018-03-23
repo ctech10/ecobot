@@ -1,18 +1,20 @@
-var RtmClient = require('@slack/client').RtmClient;
-var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+const { RTMClient, WebClient } = require('@slack/client');
+const token = 'xoxb-335096973780-WIcdKVGbewlRevm2x92qIoR5';
 
-var rtm = new RtmClient('xoxb-335096973780-mgsuL47sUvJH9noHWUUZDi4v');
+const rtm = new RTMClient(token);
 rtm.start();
+
+const web = new WebClient(token);
 
 let channel;
 
-rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
-    for (const c of rtmStartData.channels) {
-        if (c.is_member && c.name ==='smartbot') { channel = c.id }
-    }
-    console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}`);
-  });
+web.channels.list()
+  .then((res) => {
+    channel = res.channels.find(c => c.is_member);
+});
 
-  rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-    rtm.sendMessage("Hello!", channel);
-  });
+rtm.on('message', (message) => {
+    if(message.text.includes('U9V2UUMNY')){
+        rtm.sendMessage(message.text.replace("<@U9V2UUMNY>:",""), channel.id)
+    }
+});
