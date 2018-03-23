@@ -1,0 +1,18 @@
+{
+  "name": "slackbot",
+  "version": "1.0.0",
+  "description": "eco bot example",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "eco"
+  ],
+  "author": "Nastia",
+  "license": "MIT",
+  "dependencies": {
+    "@slack/client": "^4.0.1"
+  }
+}
